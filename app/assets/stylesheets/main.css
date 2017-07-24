@@ -1,0 +1,156 @@
+@media only screen and (max-width: 1366px) and (min-width: 641px)
+
+* { 
+    margin:0;
+    padding:0;
+}
+
+
+
+head {
+    margin: 0;
+    padding: 0;
+    display: none;
+}
+
+
+
+body, div th, td {
+    color: #666;
+    font-family: "맑은 고딕", 돋움, tahoma;
+    font-size: 12px;
+    letter-spacing: -1px;
+}
+
+body{
+    overflow: hidden;
+    background-color: #f8f8f8;
+} 
+
+div {
+    display: block;
+}
+
+#container { 
+    margin: 80px auto 0 auto;
+    width: 1180px;
+    box-sizing: border-box;
+}
+#container.timetable {
+    position: relative;
+    padding: 15px;
+    width: 100%;
+    overflow:auto;
+}
+
+#container > div.wrap {
+    float: middle;
+    width: 780px;
+}
+
+
+#container div.tablehead {
+    position: fixed;
+    z-index: 90;
+    margin-top: -40px;
+    padding-top: -25px;
+    width: inherit;
+    background-color: #f8f8f8;
+}
+
+table {
+    display: table;
+    border-collapse: separate;
+    border-spacing: 2px;
+    border-color: grey;
+}
+
+#container table.tablehead {
+    background-color: #f2f2f2;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+tbody {
+    display: table-row-group;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+tr {
+    display: table-row;
+    vertical-align: middle;
+    border-color: inherit;
+}
+
+td, th {
+    display: table-cell;
+    vertical-align: middle;
+}
+th {
+    font-weight: bold;
+    text-align: -internal-center;
+}
+#container table.tablehead tr, #container table.tablebody tr {
+    height: 40px;
+}
+
+#container table.tablehead tr th, #container table.tablebody tr th, #container table.tablebody tr th div {
+    width: 60px;
+}
+
+#container table.tablehead tr th, #container table.tablehead tr td {
+    border: 1px solid #d6d6d6;
+    color: #a6a6a6;
+    font-weight: normal;
+    text-align: center;
+}
+
+#container table.tablehead tr td {
+    font-size: 13px;
+
+}
+
+#container div.tablebody {
+    margin-top: 39px;
+    width: inherit;
+}
+
+#container table.tablebody {
+    background-color: transparent;
+    border-collapse: collapse;
+    width: 100%;
+}
+
+#container table.tablebody tr td div.cols{
+    position: absolute;
+    z-index: 11;
+}
+
+
+#container table.tablebody tr td div.grids div.grid {
+    height: 40px;
+    line-height: 50px;
+    font-size: 12px;
+    padding:1px;
+}
+#container table.tablebody tr th div.times div.time {
+    height: 40px;
+    line-height: 50px;
+    font-size: 12px;
+    padding:1px;
+}
+
+#container table.tablebody tr th div.times div.time, #container table.tablebody tr th div.hours div.hour{
+    box-sizing: border-box;
+    border-top: : 1px solid #d6d6d6;
+    color: #a6a6a6;
+    font-weight: normal;
+    text-align: center;
+}
+
+#container table.tablebody tr td div.grids div.grid {
+    box-sizing: border-box;
+    border: 1px solid #e3e3e3;
+}
+
