@@ -54,7 +54,8 @@ bower.json
 .byebug_history
 
 #etc
-.uxf
-.xls
+*.uxf
+*.xls
+*.xlsx
 
 # End of https://www.gitignore.io/api/rails
