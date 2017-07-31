@@ -13,7 +13,7 @@
 ActiveRecord::Schema.define(version: 20170724064312) do
 
   create_table "lectures", force: :cascade do |t|
-    t.string "opend_department"
+    t.string "department"
     t.integer "school_year"
     t.integer "lecture_num"
     t.integer "division_group"
@@ -22,11 +22,11 @@ ActiveRecord::Schema.define(version: 20170724064312) do
     t.string "grades_time"
     t.string "professor"
     t.string "lecture_time"
-    t.boolean "english"
+    t.boolean "english", default: false
     t.integer "refinement_field"
     t.string "class_type"
-    t.boolean "assessment_type_grade"
-    t.boolean "relative_grade"
+    t.boolean "assessment_type_grade", default: false
+    t.boolean "relative_grade", default: false
   end
 
 end
