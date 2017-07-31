@@ -9,7 +9,8 @@ require 'roo-xls'
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-xlsx = Roo::Spreadsheet.open('D:/sheet.xls')
+# xlsx = Roo::Spreadsheet.open('D:/sheet.xls')
+xlsx = Roo::Spreadsheet.open('/home/ubuntu/workspace/public/sheet.xls')
 sheet = xlsx.sheet(0)
 
 ApplicationRecord.transaction do
