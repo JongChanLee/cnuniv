@@ -33,7 +33,7 @@
       <% end %>
     </table>
     <%= form_tag timetables_path, method: :post, id: "timetables_form" do %>
-    <%= submit_tag "제출" %>
+        <%= submit_tag "제출" %>
     <% end %>
   </article>
 
@@ -102,7 +102,8 @@
             //기존에 채워진 것이 있을 때는 기존것들을 싹 비우고 채워줌
 
             for (var i = 0; i < lectures[category].length; i++) {
-                var lecture = "<tr class='lecture' data-lecture-time=" + getLectureTime(lectures[category][i]["lecture_time"]) + ">" +
+                var lecture = "<tr class='lecture " + lectures[category][i]["lecture_num"] + "'" +
+                    "data-lecture-time=" + getLectureTime(lectures[category][i]["lecture_time"]) + ">" +
                     "<td>" + lectures[category][i]["lecture_num"] + "</td>" +
                     "<td>" + lectures[category][i]["subject_name"] + "</td>" +
                     "<td>" + lectures[category][i]["professor"] + "</td>" +
@@ -114,17 +115,32 @@
                 lecture_table.append(lecture);
             }
 
-            set_disabled_lecture();
+
+            for (var i = 0; i < selected_lecture.length; i++) {
+                console.log("test");
+                $(".lecture." + selected_lecture[i]).addClass("lecture-selected " + background_color_used[i]);
+            }
 
             //채워준(dom에 추가된 다음에) 다음에 각 수업 별로 클릭 이벤트 리스너를 등록해줘야하기 때문에 이 함수 안에 존재.
             $(".lecture-table tr.lecture").hover(function () {
-                var tr = $(this);
+                var current_lecture_tr = $(this);
                 // hover in
-                if (!tr.hasClass("lecture-disabled"))
-                    tr.addClass("lecture-hovered");
+                if (!current_lecture_tr.hasClass("lecture-disabled"))
+                    current_lecture_tr.addClass("lecture-hovered");
+
+                var times = (current_lecture_tr.data("lecture-time")).split(",");
+                for (var i = 0; i < times.length; i++){
+                    $("#" + times[i]).css("background-color", "#a7a7a7");
+                }
+
             }, function () {
+                var current_lecture_tr = $(this);
                 // hover out
-                $(this).removeClass("lecture-hovered");
+                current_lecture_tr.removeClass("lecture-hovered");
+                var times = (current_lecture_tr.data("lecture-time")).split(",");
+                for (var i = 0; i < times.length; i++){
+                    $("#" + times[i]).css("background-color", "");
+                }
             }).click(function () {
                 var current_lecture_tr = $(this);
                 var lecture_num = current_lecture_tr.children()[0].innerHTML;
@@ -217,6 +233,8 @@
                 add_hidden_input(lecture_num);
                 set_disabled_lecture();
             });
+
+            set_disabled_lecture();
         });
 
 
