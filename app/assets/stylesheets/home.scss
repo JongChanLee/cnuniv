@@ -2,26 +2,3 @@
 // They will automatically be included in application.css.
 // You can use Sass (SCSS) here: http://sass-lang.com/
 
-.index {
-  .lecture-area {
-    display: flex;
-    flex-direction: row;
-    height: 500px;
-    .categories-group {
-      width: 350px;
-      overflow-y: scroll;
-      .category {
-        padding: 2px;
-        padding-left: 12px;
-        font-size: 14px;
-        border-bottom: 1px solid #eeeeee;
-        &:hover {
-          background-color: #eeeeee;
-        }
-      }
-    }
-    .lectures-group {
-      flex: 1;
-    }
-  }
-}

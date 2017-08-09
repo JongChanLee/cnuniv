@@ -1,0 +1,331 @@
+<section class="timetables-index">
+  <article class="timetable">
+    <table style="width: 626px; overflow: hidden;">
+      <tr>
+        <td></td>
+        <% %w[월 화 수 목 금].each do |week| %>
+            <th>
+              <%= week %>
+            </th>
+        <% end %>
+      </tr>
+      <% 9.upto(22) do |a| %>
+          <tr>
+            <th>
+              <%= "#{a}시" %>
+            </th>
+            <td id="mon<%= a*2 %>"></td>
+            <td id="tue<%= a*2 %>"></td>
+            <td id="wed<%= a*2 %>"></td>
+            <td id="thu<%= a*2 %>"></td>
+            <td id="fri<%= a*2 %>"></td>
+          </tr>
+          <tr>
+            <th>
+              <%= "#{a}시 30분" %>
+            </th>
+            <td id="mon<%= a*2 + 1 %>"></td>
+            <td id="tue<%= a*2 + 1 %>"></td>
+            <td id="wed<%= a*2 + 1 %>"></td>
+            <td id="thu<%= a*2 + 1 %>"></td>
+            <td id="fri<%= a*2 + 1 %>"></td>
+          </tr>
+      <% end %>
+    </table>
+    <%= form_tag timetables_path, method: :post, id: "timetables_form" do %>
+    <%= submit_tag "제출" %>
+    <% end %>
+  </article>
+
+  <article class="lecture-area">
+    <div class="categories-group">
+      <% @data.keys.each_with_index do |key, index| %>
+          <div class="category" data-category="<%= key %>">
+            <%= key %>
+          </div>
+      <% end %>
+    </div>
+    <div class="lectures-group">
+      <table class="lecture-table">
+        <thead>
+        <tr>
+          <th>학수번호</th>
+          <th>과목명</th>
+          <th>교수명</th>
+          <th>학점/시수</th>
+          <th>학년</th>
+          <th>강의시간</th>
+          <th>평가방식</th>
+        </tr>
+        </thead>
+        <tbody>
+        </tbody>
+      </table>
+    </div>
+  </article>
+
+</section>
+
+<script type="text/javascript" charset="utf-8">
+    $(document).ready(function () {
+        var background_color_unused = ["lecture-selected-1", "lecture-selected-2", "lecture-selected-3", "lecture-selected-4", "lecture-selected-5", "lecture-selected-6", "lecture-selected-7", "lecture-selected-8", "lecture-selected-9", "lecture-selected-10", "lecture-selected-11", "lecture-selected-12", "lecture-selected-13", "lecture-selected-14"];
+        var background_color_used = [];
+
+        var lectures = {};
+        <% @data.keys.each do |key| %>
+        lectures["<%= key %>"] = [];
+        <% @data[key].each do |lecture| %>
+        lectures["<%= key %>"].push(
+            {
+                subject_name: "<%= lecture.subject_name %>",
+                school_year: <%= lecture.school_year %>,
+                lecture_num: <%= lecture.lecture_num %> +"-" + ("0" + <%= lecture.division_group %>).slice(-2),
+                grades_time: "<%= lecture.grades_time %>",
+                professor: "<%= lecture.professor %>",
+                lecture_time: "<%= raw lecture.lecture_time %>",
+                assessment_type_grade: <%= lecture.assessment_type_grade %> ? "GRADE" : "PASS/FAIL",
+                relative_grade: <%= lecture.relative_grade %> ? "상대평가" : "절대평가"
+            }
+        );
+        <% end %>
+        <% end %>
+
+        var selected_time = []; // 수업을 선택함에 따라, 다른 수업을 신청하지 못하게 하기 위해 존재.
+        var selected_lecture = [];
+        var lecture_table = $(".lecture-table tbody");
+
+        $('.category').click(function () {
+            //교양 또는 학과가 클릭 되었을 때 오른쪽 영역을 해당 수업들로 채워줌.
+            $(".category.category-selected").removeClass("category-selected");
+            var category = $(this).addClass("category-selected").data("category");
+            lecture_table.empty();
+            //기존에 채워진 것이 있을 때는 기존것들을 싹 비우고 채워줌
+
+            for (var i = 0; i < lectures[category].length; i++) {
+                var lecture = "<tr class='lecture' data-lecture-time=" + getLectureTime(lectures[category][i]["lecture_time"]) + ">" +
+                    "<td>" + lectures[category][i]["lecture_num"] + "</td>" +
+                    "<td>" + lectures[category][i]["subject_name"] + "</td>" +
+                    "<td>" + lectures[category][i]["professor"] + "</td>" +
+                    "<td>" + lectures[category][i]["grades_time"] + "</td>" +
+                    "<td>" + lectures[category][i]["school_year"] + "</td>" +
+                    "<td>" + lectures[category][i]["lecture_time"] + "</td>" +
+                    "<td>" + lectures[category][i]["assessment_type_grade"] + " / " + lectures[category][i]["relative_grade"] + "</td>" +
+                    "</tr>";
+                lecture_table.append(lecture);
+            }
+
+            set_disabled_lecture();
+
+            //채워준(dom에 추가된 다음에) 다음에 각 수업 별로 클릭 이벤트 리스너를 등록해줘야하기 때문에 이 함수 안에 존재.
+            $(".lecture-table tr.lecture").hover(function () {
+                var tr = $(this);
+                // hover in
+                if (!tr.hasClass("lecture-disabled"))
+                    tr.addClass("lecture-hovered");
+            }, function () {
+                // hover out
+                $(this).removeClass("lecture-hovered");
+            }).click(function () {
+                var current_lecture_tr = $(this);
+                var lecture_num = current_lecture_tr.children()[0].innerHTML;
+                var subject_name = current_lecture_tr.children()[1].innerHTML;
+                var professor = current_lecture_tr.children()[2].innerHTML;
+                var times = (current_lecture_tr.data("lecture-time")).split(",");
+                var background_color;
+
+                //selected 된 것이 다시 클릭되면 취소.
+                if (current_lecture_tr.hasClass("lecture-selected")) {
+                    for (var i = 0; i < background_color_used.length; i++)
+                        if (current_lecture_tr.hasClass(background_color_used[i])) {
+                            background_color = background_color_used[i];
+                            current_lecture_tr.removeClass("lecture-selected " + background_color);
+                            background_color_used.splice(background_color_used.indexOf(background_color), 1);
+                            background_color_unused.push(background_color);
+                            break;
+                        }
+                    selected_lecture.splice(selected_lecture.indexOf(lecture_num), 1);
+
+                    for (var i = 0; i < times.length; i++) {
+                        $("#" + times[i]).removeClass("lecture-selected " + background_color)
+                            .css("display", "table-cell")
+                            .attr("rowspan", "")
+                            .html("");
+                        selected_time.splice(selected_time.indexOf(times[i]), 1);
+                    }
+
+                    set_disabled_lecture();
+                    remove_hidden_input(lecture_num);
+                    return;
+                }
+
+                //겹치는 것이 있으면 alert을 띄우고 나머지는 실행하지 않는다.
+                for (var i = 0; i < times.length; i++) {
+                    if (selected_time.includes(times[i])) {
+                        alert("시간표가 겹칩니다.");
+                        return;
+                    }
+                }
+
+                selected_lecture.push(lecture_num);
+                selected_time = selected_time.concat(times);
+
+                background_color = background_color_unused.pop();
+                background_color_used.push(background_color);
+                current_lecture_tr.addClass("lecture-selected " + background_color);
+
+                var week = times[0].slice(0, 3);
+                var start = parseInt(times[0].slice(3));
+                var count = 1;
+                for (var i = 1; i < times.length; i++) {
+                    if ((week == times[i].slice(0, 3)) && ((times[i].slice(3) - start) == count)) {
+                        count += 1;
+                        if (i == (times.length - 1)) {
+                            for (var j = 1; j < count; j++) {
+                                $("#" + week + (start + j)).css("display", "none");
+                            }
+                            $("#" + week + start).attr("rowspan", count)
+                                .html(subject_name + "<br>" + professor)
+                                .addClass("lecture-selected " + background_color)
+                                .on("click",
+                                    {
+                                        times: times,
+                                        current_lecture_tr: current_lecture_tr,
+                                        lecture_num: lecture_num
+                                    },
+                                    td_click_handler
+                                );
+                        }
+                    } else {
+                        for (var j = 1; j < count; j++)
+                            $("#" + week + (start + j)).css("display", "none");
+                        $("#" + week + start).attr("rowspan", count)
+                            .html(subject_name + "<br>" + professor)
+                            .addClass("lecture-selected " + background_color)
+                            .on("click",
+                                {
+                                    times: times,
+                                    current_lecture_tr: current_lecture_tr,
+                                    lecture_num: lecture_num
+                                },
+                                td_click_handler
+                            );
+                        week = times[i].slice(0, 3);
+                        start = parseInt(times[i].slice(3));
+                        count = 1;
+                    }
+                }
+                add_hidden_input(lecture_num);
+                set_disabled_lecture();
+            });
+        });
+
+
+        function getLectureTime(lectures) {
+            var input = lectures.split(", ");
+            var result = [];
+            for (var i = 0; i < input.length; i++) {
+                var week;
+                var start_time;
+                var period_time;
+                switch (input[i][0]) {
+                    case "월":
+                        week = "mon";
+                        break;
+                    case "화":
+                        week = "tue";
+                        break;
+                    case "수":
+                        week = "wed";
+                        break;
+                    case "목":
+                        week = "thu";
+                        break;
+                    case "금":
+                        week = "fri";
+                        break;
+                    default:
+                        week = "";
+                }
+
+                start_time = parseInt(input[i].slice(1, 3)) * 2;
+                if (input[i][4] != "0") {
+                    start_time += 1;
+                }
+                period_time = (parseInt(input[i].slice(7, 9)) * 2) - start_time;
+                if (input[i][10] != "0") {
+                    period_time += 1;
+                }
+
+                for (var j = 0; j < period_time; j++) {
+                    result.push(week + (start_time + j ));
+                }
+            }
+            return result;
+        }
+
+        function set_disabled_lecture() {
+            var current_category_lectures = lecture_table.find("tr");
+            for (var i = 0; i < current_category_lectures.length; i++) {
+                var tr = $(current_category_lectures[i]);
+                if (tr.hasClass("lecture-selected"))
+                    continue;
+                var times = (tr.data("lecture-time")).split(",");
+                var flag = false;
+
+                if (tr.hasClass("lecture-disabled"))
+                    flag = true; // 이미 disabled 되어 있으면, true로 설정
+
+                for (var j = 0; j < times.length; j++) {
+                    if (selected_time.includes(times[j])) {
+                        if (flag) {
+                            flag = false; // disabled가 되어 있고, 여전히 disabled여야 하면 false로 바꿈
+                            break;
+                        }
+                        tr.addClass("lecture-disabled");
+                        break;
+                    }
+                }
+                if (flag) {
+                    // disabled로 되어 있었지만, 겹치는 시간이 존재하지 않으면 flag가 true이기 때문에 이 안으로 들어옴. 거기서 remove를 함.
+                    tr.removeClass("lecture-disabled");
+                }
+            }
+        }
+
+        function td_click_handler(e) {
+            var background_color;
+            var current_lecture_tr = e.data.current_lecture_tr;
+            var times = e.data.times;
+            var lecture_num = e.data.lecture_num;
+            for (var i = 0; i < background_color_used.length; i++)
+                if (current_lecture_tr.hasClass(background_color_used[i])) {
+                    background_color = background_color_used[i];
+                    current_lecture_tr.removeClass("lecture-selected " + background_color);
+                    background_color_used.splice(background_color_used.indexOf(background_color), 1);
+                    background_color_unused.push(background_color);
+                    break;
+                }
+            selected_lecture.splice(selected_lecture.indexOf(lecture_num), 1);
+
+            for (var i = 0; i < times.length; i++) {
+                $("#" + times[i]).removeClass("lecture-selected " + background_color)
+                    .css("display", "table-cell")
+                    .attr("rowspan", "")
+                    .html("");
+                selected_time.splice(selected_time.indexOf(times[i]), 1);
+            }
+            $(e.target).off("click");
+            set_disabled_lecture();
+            remove_hidden_input(lecture_num);
+        }
+
+        function add_hidden_input(lecture_num) {
+            var hidden_input = "<input class='added_lectures " + lecture_num + "' type='hidden' name='lectures[]' value=" + lecture_num + ">";
+            $("#timetables_form").append(hidden_input);
+        }
+
+        function remove_hidden_input(lecture_num) {
+            $(".added_lectures." + lecture_num).remove();
+        }
+    });
+</script>

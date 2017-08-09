@@ -1,4 +1,5 @@
 class Lecture < ApplicationRecord
+  has_and_belongs_to_many :timetables
 
   #completion_division = %w[공통 교양(공통기초) 교양(일반) 교직 기초 일반선택 전공 전공(기초) 전공(심화) 전공(핵심) 전공선택 전공필수]
   def self.get_refinement

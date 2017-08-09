@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170724064312) do
+ActiveRecord::Schema.define(version: 20170809072432) do
 
   create_table "lectures", force: :cascade do |t|
     t.string "department"
@@ -27,6 +27,17 @@ ActiveRecord::Schema.define(version: 20170724064312) do
     t.string "class_type"
     t.boolean "assessment_type_grade", default: false
     t.boolean "relative_grade", default: false
+  end
+
+  create_table "lectures_timetables", id: false, force: :cascade do |t|
+    t.integer "lecture_id", null: false
+    t.integer "timetable_id", null: false
+  end
+
+  create_table "timetables", force: :cascade do |t|
+    t.string "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
 end

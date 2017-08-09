@@ -1,0 +1,105 @@
+// Place all the styles related to the timetables controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+
+.timetables-index {
+  .timetable {
+    table {
+
+      td, th {
+        border: 1px solid gray;
+      }
+
+      th {
+        width: 100px;
+      }
+    }
+  }
+  .lecture-area {
+    display: flex;
+    flex-direction: row;
+    height: 500px;
+    .categories-group {
+      width: 350px;
+      overflow-y: scroll;
+      .category {
+        padding: 2px;
+        padding-left: 12px;
+        font-size: 14px;
+        border-bottom: 1px solid #eeeeee;
+        &:hover {
+          background-color: #eeeeee;
+          cursor: pointer;
+        }
+        &.category-selected {
+          background-color: #888888;
+        }
+      }
+    }
+    .lectures-group {
+      flex: 1;
+      .lecture-table {
+        tbody {
+          tr {
+            &.lecture-hovered {
+              background-color: #a7a7a7;
+              cursor: pointer;
+            }
+            &.lecture-disabled {
+              background-color: lightgrey;
+              td {
+                color: white;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .lecture-selected {
+    cursor: pointer;
+    &.lecture-selected-1 {
+      background-color: #91a7d0;
+    }
+    &.lecture-selected-2 {
+      background-color: #c0b7af;
+    }
+    &.lecture-selected-3 {
+      background-color: #F6CAC9;
+    }
+    &.lecture-selected-4 {
+      background-color: #b6ba99;
+    }
+    &.lecture-selected-5 {
+      background-color: #af869a;
+    }
+    &.lecture-selected-6 {
+      background-color: #648589;
+    }
+    &.lecture-selected-7 {
+      background-color: #af9976;
+    }
+    &.lecture-selected-8 {
+      background-color: #eb9587;
+    }
+    &.lecture-selected-9 {
+      background-color: #e3eaa5;
+    }
+    &.lecture-selected-10 {
+      background-color: #bd9bc0;
+    }
+    &.lecture-selected-11 {
+      background-color: #ddbf5e;
+    }
+    &.lecture-selected-12 {
+      background-color: #c3ddd6;
+    }
+    &.lecture-selected-13 {
+      background-color: #609087;
+    }
+    &.lecture-selected-14 {
+      background-color: #f4b794;
+    }
+  }
+
+}
