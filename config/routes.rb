@@ -1,8 +1,9 @@
 Rails.application.routes.draw do
 
-  
-  root 'home#timetable' #Main Page
-  get '/home/index' => 'home#index'
-
+ 
+  devise_for :users
   resources :timetables, only: [:index, :create, :update, :destroy]
+  
+  
+  root 'home#index'
 end

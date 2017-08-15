@@ -1,0 +1,22 @@
+// "bootstrap-sprockets" must be imported before "bootstrap" and "bootstrap/variables"
+
+
+// Universal 
+
+
+// Header
+
+#logo  {
+  float : left;
+  margin-right: 10px;
+  font-size : 2.0em;
+  color: #F6CAC9;
+  text-transform: uppercase;
+  letter-spacing: -1px;
+  padding-top: 7px;
+  font-weight: bold;
+  &:hover {
+    color: #91A7D0;
+    text-decoration: none;
+  }
+}

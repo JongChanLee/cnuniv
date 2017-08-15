@@ -5,26 +5,64 @@
 .timetables-index {
   .timetable {
     table {
-
-      td, th {
-        border: 1px solid gray;
+      margin: 10px auto;
+      border-collapse: collapse;
+      tr {
+        th:nth-child(1) {
+          width: 70px;
+        }
+        height: 20px;
       }
-
+      td {
+        border: 1px solid gray;
+        text-align: center;
+      }
       th {
-        width: 100px;
+        width: 120px;
+        border: 1px solid black;
+        text-align: center;
+      }
+    }
+    .btn-cover {
+      width: 100px;
+      height: 100px;
+      border-radius: 100%;
+      background-color: lightblue;
+      position: fixed;
+      left: 200px;
+      bottom: -50px;
+      transition: all 0.8s;
+      z-index: 9;
+      &.btn-add-selected{
+        bottom: 450px;
+      }
+      #btn_add_lecture {
+        transition: all 0.8s;
+        position: relative;
+        top: 20px;
+        left: 25px;
       }
     }
   }
   .lecture-area {
+    background-color: white;
     display: flex;
     flex-direction: row;
     height: 500px;
+    width: 100%;
+    z-index: 10;
+    position: fixed;
+    bottom: -500px;
+    transition: all 0.8s;
+    &.btn-add-selected{
+      bottom: 0;
+      transition: all 0.8s;
+    }
     .categories-group {
       width: 350px;
       overflow-y: scroll;
       .category {
-        padding: 2px;
-        padding-left: 12px;
+        padding: 2px 2px 2px 12px;
         font-size: 14px;
         border-bottom: 1px solid #eeeeee;
         &:hover {
@@ -37,8 +75,46 @@
       }
     }
     .lectures-group {
+      overflow-y: scroll;
       flex: 1;
       .lecture-table {
+        border-collapse: collapse;
+        width: 100%;
+        tr {
+          display: flex;
+          flex-direction: row;
+          th, td {
+            font-size: 13px;
+            &:nth-child(1) {
+              width: 70px;
+              text-align: center;
+            }
+            &:nth-child(2) {
+              width: 180px;
+              flex: 2;
+            }
+            &:nth-child(3) {
+              width: 50px;
+              flex: 1;
+              text-align: center;
+            }
+            &:nth-child(4) {
+              width: 60px;
+              text-align: center;
+            }
+            &:nth-child(5) {
+              width: 40px;
+              text-align: center;
+            }
+            &:nth-child(6) {
+              width: 340px;
+            }
+            &:nth-child(7) {
+              width: 120px;
+              text-align: center;
+            }
+          }
+        }
         tbody {
           tr {
             &.lecture-hovered {
@@ -101,5 +177,4 @@
       background-color: #f4b794;
     }
   }
-
 }
