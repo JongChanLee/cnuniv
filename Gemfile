@@ -6,9 +6,16 @@ git_source(:github) do |repo_name|
 end
 
 gem 'wdm', '>= 0.1.0' if Gem.win_platform?
-
+# 엑셀 불러오기
 gem 'roo-xls'
 gem 'roo'
+# 회원 관리
+gem 'devise'
+
+# Bootstrap
+gem 'bootstrap-sass', '~> 3.3.6'
+# gem 'bootstrap_form'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '~> 5.1.2'
 # Use sqlite3 as the database for Active Record
