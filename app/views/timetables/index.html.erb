@@ -1,15 +1,15 @@
 <section class="timetables-index">
   <article class="timetable">
-    <table style="width: 626px; overflow: hidden;">
+    <table>
       <tr>
-        <td></td>
+        <th></th>
         <% %w[월 화 수 목 금].each do |week| %>
             <th>
               <%= week %>
             </th>
         <% end %>
       </tr>
-      <% 9.upto(22) do |a| %>
+      <% 9.upto(21) do |a| %>
           <tr>
             <th>
               <%= "#{a}시" %>
@@ -35,6 +35,9 @@
     <%= form_tag timetables_path, method: :post, id: "timetables_form" do %>
         <%= submit_tag "제출" %>
     <% end %>
+    <div class="btn-cover">
+      <div id="btn_add_lecture">추가하기</div>
+    </div>
   </article>
 
   <article class="lecture-area">
@@ -129,7 +132,7 @@
                     current_lecture_tr.addClass("lecture-hovered");
 
                 var times = (current_lecture_tr.data("lecture-time")).split(",");
-                for (var i = 0; i < times.length; i++){
+                for (var i = 0; i < times.length; i++) {
                     $("#" + times[i]).css("background-color", "#a7a7a7");
                 }
 
@@ -138,7 +141,7 @@
                 // hover out
                 current_lecture_tr.removeClass("lecture-hovered");
                 var times = (current_lecture_tr.data("lecture-time")).split(",");
-                for (var i = 0; i < times.length; i++){
+                for (var i = 0; i < times.length; i++) {
                     $("#" + times[i]).css("background-color", "");
                 }
             }).click(function () {
@@ -177,7 +180,6 @@
                 //겹치는 것이 있으면 alert을 띄우고 나머지는 실행하지 않는다.
                 for (var i = 0; i < times.length; i++) {
                     if (selected_time.includes(times[i])) {
-                        alert("시간표가 겹칩니다.");
                         return;
                     }
                 }
@@ -345,5 +347,10 @@
         function remove_hidden_input(lecture_num) {
             $(".added_lectures." + lecture_num).remove();
         }
+
+        $(".btn-cover").click(function () {
+            $(this).toggleClass("btn-add-selected");
+            $(".lecture-area").toggleClass("btn-add-selected");
+        })
     });
 </script>
