@@ -1,0 +1,52 @@
+header {
+  width: 100vw;
+  height: 50px;
+  padding: 5px 15px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  .menu-trigger {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+    span {
+      position: absolute;
+      left: 0;
+      width: 100%;
+      height: 4px;
+      /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#91a7d0+1,f6cac9+99 */
+      background: $main-color-blue; /* Old browsers */
+      background: -moz-linear-gradient(-45deg, $main-color-blue 1%, $main-color-pink 99%); /* FF3.6-15 */
+      background: -webkit-linear-gradient(-45deg, $main-color-blue 1%, $main-color-pink 99%); /* Chrome10-25,Safari5.1-6 */
+      background: linear-gradient(135deg, $main-color-blue 1%, $main-color-pink 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+      filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#91a7d0', endColorstr='#f6cac9', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+      border-radius: 4px;
+      &:nth-child(1) {
+        top: 0;
+      }
+      &:nth-child(2) {
+        top: 10px;
+      }
+      &:nth-child(3) {
+        top: 20px;
+      }
+    }
+    &, span {
+      display: inline-block;
+      transition: all .4s;
+      box-sizing: border-box;
+    }
+  }
+
+  #logo {
+    margin: 0 auto;
+    img {
+      width: 200px;
+      height: auto;
+    }
+    &:hover {
+      text-decoration: none;
+    }
+  }
+}

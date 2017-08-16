@@ -12,7 +12,20 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require rails-ujs
+// require rails-ujs
 //= require bootstrap-sprockets
-//= require turbolinks
 //= require_tree .
+
+$(document).ready(function () {
+    $(".menu-trigger").click(function () {
+        $("nav").toggleClass("opened");
+        $(".nav-cover").fadeIn(700).click(function () {
+            $("nav").toggleClass("opened");
+            $(this).fadeOut(700).off("click");
+        });
+    });
+    $("nav .close-cover .close").click(function () {
+        $("nav").toggleClass("opened");
+        $(".nav-cover").fadeOut(700);
+    });
+});

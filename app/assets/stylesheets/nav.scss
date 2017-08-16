@@ -1,0 +1,135 @@
+nav {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 300px;
+  height: 100vh;
+  padding: 20px;
+
+  position: fixed;
+  top: 0;
+  left: -300px;
+  z-index: 999;
+
+  transition: all 0.7s;
+
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#91a7d0+1,f6cac9+99 */
+  background: $main-color-blue; /* Old browsers */
+  background: -moz-linear-gradient(-45deg, $main-color-blue 1%, $main-color-pink 99%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(-45deg, $main-color-blue 1%, $main-color-pink 99%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(135deg, $main-color-blue 1%, $main-color-pink 99%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#91a7d0', endColorstr='#f6cac9', GradientType=1); /* IE6-9 fallback on horizontal gradient */
+
+  .close-cover {
+    width: 100%;
+    text-align: end;
+    margin-bottom: 20px;
+    .close {
+      font-size: 40px;
+    }
+  }
+
+  .profile {
+    width: 100%;
+    height: 250px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    .profile-image-cover {
+      padding: 5px;
+      width: 172px;
+      height: 172px;
+      border-radius: 100%;
+      border: 1px solid floralwhite;
+      background-color: rgba(255, 255, 255, 0.25);
+      .profile-image {
+        width: 160px;
+        height: 160px;
+        border-radius: 100%;
+        background-image: image_url("profile.jpg");
+        background-size: cover;
+        background-position: center;
+
+      }
+    }
+    .user-name {
+      height: 40px;
+      color: floralwhite;
+      font-size: 20px;
+      line-height:20px;
+      margin-top: 10px;
+    }
+    .devise-btn-cover {
+      float: 1;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: center;
+      .btn-devise {
+        font-size: 20px;
+        font-weight: bold;
+        text-align: center;
+        width: 100px;
+        padding: 2px 0;
+        margin: 0 10px;
+        border: 1px solid ghostwhite;
+        border-radius: 20px;
+        color: white;
+        &:hover {
+          text-decoration: none;
+          background-color: rgba(255, 255, 255, 0.25);
+        }
+
+      }
+    }
+  }
+
+  hr {
+    width: 100%;
+    border: 1px solid white;
+    margin: 10px 0;
+  }
+
+  .btn-nav {
+    color: white;
+    font-size: 25px;
+    font-weight: bold;
+    &:hover {
+      color: grey;
+      text-decoration: none;
+    }
+  }
+  &.opened {
+    left: 0;
+    transition: all 0.7s;
+  }
+}
+
+.nav-cover {
+  width: 100vw;
+  height: 100vh;
+  display: none;
+  position: fixed;
+  background-color: grey;
+  opacity: 0.7;
+  z-index: 998;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 0.7;
+  }
+}
+
+@keyframes fade-out {
+  from {
+    opacity: 0.7;
+  }
+  to {
+    opacity: 0;
+  }
+}

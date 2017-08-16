@@ -1,0 +1,63 @@
+.devise {
+  margin: 100px auto 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  border: 1px solid $main-color-pink;
+  border-radius: 20px;
+  width: 400px;
+  .devise-page {
+    text-align: center;
+    font-size: 40px;
+    font-weight: bold;
+    color: $main-color-blue;
+  }
+  .simple_form {
+    width: 400px;
+    .form-inputs {
+      display: flex;
+      flex-direction: column;
+      .input {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        padding: 10px;
+        label {
+          color: $main-color-pink;
+          font-size: 20px;
+          font-weight: bold;
+          abbr {
+            display: none;
+          }
+        }
+        input[type="email"], input[type="password"] {
+          font-size: 15px;
+          width: 200px;
+        }
+        .hint {
+          display: none;
+        }
+      }
+    }
+    .form-actions {
+      margin: 10px;
+      input[type="submit"] {
+        width: 80%;
+        height: 40px;
+        margin: 0 auto;
+        display: block;
+        border-radius: 10px;
+        background-color: $main-color-blue;
+        transition: all 0.8s;
+        font-size: 20px;
+        font-weight: bold;
+        color: floralwhite;
+        &:hover {
+          background-color: $main-color-pink;
+          transition: all 0.8s;
+        }
+      }
+    }
+  }
+}

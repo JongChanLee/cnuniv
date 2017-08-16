@@ -1,32 +1,17 @@
-*{
-    color: #666;
-    font-family: "맑은 고딕", 돋움, tahoma;
-    font-size: 12px;
-    letter-spacing: -1px;
-}
-
-body {
-    margin: 20px ;
-    padding-top : 80px;
-}
-
-#logo  {
-  float : left;
-  margin-right: 10px;
-  font-size : 2.0em;
-  color: #F6CAC9;
-  text-transform: uppercase;
+* {
+  color: #666;
+  font-family: "맑은 고딕", 돋움, tahoma;
+  font-size: 12px;
   letter-spacing: -1px;
-  padding-top: 7px;
-  font-weight: bold;
-  &:hover {
-    color: #91A7D0;
-    text-decoration: none;
-  }
 }
+
+$main-color-blue: #91a7d0;
+$main-color-pink: #f6cac9;
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
 @import "timetables";
 @import "home";
-@import "main";
+@import "nav";
+@import "header";
+@import "devise";
